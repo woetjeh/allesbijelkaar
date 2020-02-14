@@ -1,9 +1,4 @@
-﻿@using SchoolTemplate.Database;
-@model List<Product>
-@{
-  ViewData["Title"] = "Home Page";
-}
-
+﻿<!DOCTYPE html>
 <h1>HD Festivalterrein</h1>
 
 <div class="text-center">
@@ -13,12 +8,5 @@
   </p>
     <h2>Huidig evenement</h2>
     <p>De gouwe ouwen - 24-30 september 2020</p>
-  <ul>
-    @foreach (Product p in Model)
-    {
-      <li>
-        @p.Naam @p.Prijs euro
-      </li>
-    }
-  </ul>
 </div>
+<div style="background-image: url('img_girl.jpg');">
