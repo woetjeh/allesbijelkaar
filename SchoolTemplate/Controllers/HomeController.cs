@@ -22,9 +22,9 @@ namespace SchoolTemplate.Controllers
       return View(products);
     }
 
-        private List<Product> GetFestivals()
+        private List<Festival> GetFestivals()
         {
-            List<Product> products = new List<Product>();
+            List<Festival> festivals = new List<Festival>();
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
@@ -35,14 +35,7 @@ namespace SchoolTemplate.Controllers
                 {
                     while (reader.Read())
                     {
-                        int Id = Convert.ToInt32(reader["Id"]);
-                        string Naam = reader["Naam"].ToString();
-                        float Calorieen = float.Parse(reader["calorieen"].ToString());
-                        string Formaat = reader["Formaat"].ToString();
-                        int Gewicht = Convert.ToInt32(reader["Gewicht"].ToString());
-                        decimal Prijs = Decimal.Parse(reader["Prijs"].ToString());
-
-                        Product p = new Product
+                        Festival f = new Festival
                         {
                             Id = Convert.ToInt32(reader["Id"]),
                             Naam = reader["Naam"].ToString(),
@@ -51,7 +44,7 @@ namespace SchoolTemplate.Controllers
                             Gewicht = Convert.ToInt32(reader["Gewicht"].ToString()),
                             Prijs = Decimal.Parse(reader["Prijs"].ToString())
                         };
-                        products.Add(p);
+                        festivals.Add(f);
                     }
                 }
             }
@@ -105,5 +98,12 @@ namespace SchoolTemplate.Controllers
     {
       return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
-  }
+
+        [Route("festival/{id}")]
+        public IActionResult Festival(string id)
+        {
+            ViewData["id"] = id;
+            return View();
+        }
+    }
 }

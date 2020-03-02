@@ -2,15 +2,15 @@
 
 namespace SchoolTemplate.Database
 {
-  public class Product
+  public class Festival
   {
-    public int id { get; set; }
+    public int Id { get; set; }
     
-    public string naam { get; set; }
+    public string Naam { get; set; }
 
-    public string omschrijving { get; set; }
+    public string Omschrijving { get; set; }
 
-    public DateTime datum { get; set; }
+    public DateTime Datum { get; set; }
        
 
   }
