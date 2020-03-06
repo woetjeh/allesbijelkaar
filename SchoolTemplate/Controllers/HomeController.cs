@@ -39,17 +39,15 @@ namespace SchoolTemplate.Controllers
                         {
                             Id = Convert.ToInt32(reader["Id"]),
                             Naam = reader["Naam"].ToString(),
-                            Calorieen = float.Parse(reader["calorieen"].ToString()),
-                            Formaat = reader["Formaat"].ToString(),
-                            Gewicht = Convert.ToInt32(reader["Gewicht"].ToString()),
-                            Prijs = Decimal.Parse(reader["Prijs"].ToString())
+                            Omschrijving = reader["Omschrijving"].ToString(),
+                            Datum = DateTime.Parse(reader["Datum"].ToString())
                         };
                         festivals.Add(f);
                     }
                 }
             }
 
-            return products;
+            return Festivals;
         }
         private List<Product> GetProducts()
     {
