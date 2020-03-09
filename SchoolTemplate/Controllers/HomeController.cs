@@ -19,7 +19,7 @@ namespace SchoolTemplate.Controllers
     {
       List<Product> products = new List<Product>();
       // uncomment deze regel om producten uit je database toe te voegen
-      // products = GetProducts();
+      products = GetProducts();
 
       return View(products);
     }
@@ -31,7 +31,7 @@ namespace SchoolTemplate.Controllers
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("select * from festivalsite", conn);
+                MySqlCommand cmd = new MySqlCommand("select * from Festival", conn);
 
                 using (var reader = cmd.ExecuteReader())
                 {
@@ -63,14 +63,7 @@ namespace SchoolTemplate.Controllers
         using (var reader = cmd.ExecuteReader())
         {
           while (reader.Read())
-          {
-            int Id = Convert.ToInt32(reader["Id"]);
-            string Naam = reader["Naam"].ToString();
-            float Calorieen = float.Parse(reader["calorieen"].ToString());
-            string Formaat = reader["Formaat"].ToString();
-            int Gewicht = Convert.ToInt32(reader["Gewicht"].ToString());
-            decimal Prijs = Decimal.Parse(reader["Prijs"].ToString());
-
+          {           
             Product p = new Product
             {
               Id = Convert.ToInt32(reader["Id"]),
