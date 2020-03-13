@@ -11,54 +11,75 @@ namespace SchoolTemplate.Controllers
   public class HomeController : Controller
   {
     // zorg ervoor dat je hier je gebruikersnaam (leerlingnummer) en wachtwoord invult
-    string connectionString = "Server=172.16.160.21;Port=3306;Database=fastfood;Uid=lgg;Pwd=LifeUniverseEverything;";
+    string connectionString = "Server=172.16.160.21;Port=3306;Database=110161;Uid=110161;Pwd=rairLefs;";
 
-    public IActionResult Index()
+        public List<Festival> Festivals { get; private set; }
+
+        public IActionResult Index()
     {
       List<Product> products = new List<Product>();
       // uncomment deze regel om producten uit je database toe te voegen
-      // products = GetProducts();
+      products = GetProducts();
 
       return View(products);
     }
 
- 
-    private List<Product> GetProducts()
-{
-    List<Product> products = new List<Product>();
-
-    using (MySqlConnection conn = new MySqlConnection(connectionString))
-    {
-    conn.Open();
-    MySqlCommand cmd = new MySqlCommand("select * from product", conn);
-
-    using (var reader = cmd.ExecuteReader())
-    {
-        while (reader.Read())
+        private List<Festival> GetFestivals()
         {
-        int Id = Convert.ToInt32(reader["Id"]);
-        string Naam = reader["Naam"].ToString();
-        float Calorieen = float.Parse(reader["calorieen"].ToString());
-        string Formaat = reader["Formaat"].ToString();
-        int Gewicht = Convert.ToInt32(reader["Gewicht"].ToString());
-        decimal Prijs = Decimal.Parse(reader["Prijs"].ToString());
+            List<Festival> festivals = new List<Festival>();
 
-        Product p = new Product
-        {
-            Id = Convert.ToInt32(reader["Id"]),
-            Naam = reader["Naam"].ToString(),
-            Calorieen = float.Parse(reader["calorieen"].ToString()),
-            Formaat = reader["Formaat"].ToString(),
-            Gewicht = Convert.ToInt32(reader["Gewicht"].ToString()),
-            Prijs = Decimal.Parse(reader["Prijs"].ToString())
-        };
-        products.Add(p);
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("select * from Festival", conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Festival f = new Festival
+                        {
+                            Id = Convert.ToInt32(reader["Id"]),
+                            Naam = reader["Naam"].ToString(),
+                            Omschrijving = reader["Omschrijving"].ToString(),
+                            Datum = DateTime.Parse(reader["Datum"].ToString())
+                        };
+                        festivals.Add(f);
+                    }
+                }
+            }
+
+            return Festivals;
         }
-    }
-    }
+        private List<Product> GetProducts()
+    {
+      List<Product> products = new List<Product>();
 
-    return products;
-}
+      using (MySqlConnection conn = new MySqlConnection(connectionString))
+      {
+        conn.Open();
+        MySqlCommand cmd = new MySqlCommand("select * from product", conn);
+
+        using (var reader = cmd.ExecuteReader())
+        {
+          while (reader.Read())
+          {           
+            Product p = new Product
+            {
+              Id = Convert.ToInt32(reader["Id"]),
+              Naam = reader["Naam"].ToString(),
+              Calorieen = float.Parse(reader["calorieen"].ToString()),
+              Formaat = reader["Formaat"].ToString(),
+              Gewicht = Convert.ToInt32(reader["Gewicht"].ToString()),
+              Prijs = Decimal.Parse(reader["Prijs"].ToString())
+            };
+            products.Add(p);
+          }
+        }
+      }
+
+      return products;
+    }
 
     public IActionResult Privacy()
     {
@@ -70,6 +91,12 @@ namespace SchoolTemplate.Controllers
     {
       return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
-  }
-}
 
+        [Route("festival/{id}")]
+        public IActionResult Festival(string id)
+        {
+            ViewData["id"] = id;
+            return View();
+        }
+    }
+}
