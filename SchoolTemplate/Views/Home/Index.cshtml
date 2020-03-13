@@ -1,19 +1,27 @@
-﻿<!DOCTYPE html>
-<head>
-    <link rel="stylesheet" type="text/css" href="site.css">
+﻿@using SchoolTemplate.Database
+@model List<Product>
 
-</head>
-<body>
-    <h1>HD Festivalterrein</h1>
+@{
+    ViewData["Title"] = "Festival";
+}
 
-    <div class="text-center">
-        <h2 class="display-4">Welkom</h2>
-        <p>
-            Welkom op HD Festivalterrein. Wij<br/> organiseren allerlei verschillende soorten<br/> festivals, van muziekfestivals tot<br/> demonstraties.
-        </p>
-        <h2>Huidig evenement</h2>
-        <p>De gouwe ouwen - 24-30 september 2020</p>
-        <a href=""
-    </div>
-    <div style="background-image: url('');"></div>
-</body>
+<h1>HD Festivalterrein</h1>
+
+<div class="text-center">
+    <h2 class="display-4">Welkom</h2>
+    <p>
+        Welkom op HD Festivalterrein. Wij<br /> organiseren allerlei verschillende soorten<br /> festivals, van muziekfestivals tot<br /> demonstraties.
+    </p>
+    <h2>Huidig evenement</h2>
+
+    @foreach (Product p in Model)
+    {
+        <p>@p.Naam - @p.Gewicht</p>
+        <a href="/evenement/@p.Id">Meer informatie</a>
+    }
+
+
+</div>
+
+<div style="background-image: url('http://localhost:56349/img_tomorrowland.jpg');"></div>
+
